@@ -1,8 +1,6 @@
 #!/bin/bash -e
 
 on_chroot << EOF
-  c_rehash /etc/ssl/certs
-
   curl -s https://bootstrap.pypa.io/get-pip.py | python
 
   # Fetch wait-for-it
@@ -20,7 +18,7 @@ on_chroot << EOF
   cd ansible
   HOME=/home/pi MANAGE_NETWORK=true ansible-playbook site.yml --skip-tags enable-ssl,disable-nginx,touches_boot_partition
   chown -R pi:pi /home/pi
-  rm -f /home/pi/.screenly/initialized
+  rm /home/pi/.screenly/initialized
 
   apt-get autoclean
   apt-get clean
