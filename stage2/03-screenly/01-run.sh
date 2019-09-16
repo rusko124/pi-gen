@@ -29,6 +29,8 @@ on_chroot << EOF
   find /usr/share/locale -type f ! -name 'en' ! -name 'de*' ! -name 'es*' ! -name 'ja*' ! -name 'fr*' ! -name 'zh*' -delete
   find /usr/share/locale -mindepth 1 -maxdepth 1 ! -name 'en*' ! -name 'de*' ! -name 'es*' ! -name 'ja*' ! -name 'fr*' ! -name 'zh*' -exec rm -r {} \;
 
+  rm -f /etc/sudoers.d/010_pi-nopasswd
+
   HOME=/home/pi python /home/pi/screenly/server.py &
 
   # Wait for server to start
