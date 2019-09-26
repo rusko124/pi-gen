@@ -11,7 +11,7 @@ on_chroot << EOF
   cd /home/pi/screenly
   git checkout production
 
-  pip install -r requirements.txt
+  pip install -r requirements/requirements.txt
   mkdir -p /etc/ansible
   echo -e "[local]\nlocalhost ansible_connection=local" | tee /etc/ansible/hosts > /dev/null
 
@@ -28,6 +28,8 @@ on_chroot << EOF
   rm -rf /usr/share/man /usr/share/groff /usr/share/info /usr/share/lintian /usr/share/linda /var/cache/man
   find /usr/share/locale -type f ! -name 'en' ! -name 'de*' ! -name 'es*' ! -name 'ja*' ! -name 'fr*' ! -name 'zh*' -delete
   find /usr/share/locale -mindepth 1 -maxdepth 1 ! -name 'en*' ! -name 'de*' ! -name 'es*' ! -name 'ja*' ! -name 'fr*' ! -name 'zh*' -exec rm -r {} \;
+
+  rm -f /etc/sudoers.d/010_pi-nopasswd
 
   # Adds default assets
   HOME=/home/pi python -c "import server;server.add_default_assets();server.settings['default_assets']=True;server.settings.save()"
