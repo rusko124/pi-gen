@@ -31,17 +31,9 @@ on_chroot << EOF
 
   rm -f /etc/sudoers.d/010_pi-nopasswd
 
-  HOME=/home/pi python /home/pi/screenly/server.py &
-
-  # Wait for server to start
-  /tmp/wait-for-it.sh --host=127.0.0.1 --port=8080
-
   # Adds default assets
-  /home/pi/screenly/bin/prepare_device_for_imaging.sh
+  cd /home/pi/screenly
+  HOME=/home/pi python -c "import server;server.add_default_assets();server.settings['default_assets']=True;server.settings.save()"
 
-  pkill -f server.py
-  sleep 5
   chown -R pi:pi /home/pi
-
-  rm /tmp/wait-for-it.sh
 EOF
