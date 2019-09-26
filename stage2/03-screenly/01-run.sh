@@ -30,6 +30,7 @@ on_chroot << EOF
   find /usr/share/locale -mindepth 1 -maxdepth 1 ! -name 'en*' ! -name 'de*' ! -name 'es*' ! -name 'ja*' ! -name 'fr*' ! -name 'zh*' -exec rm -r {} \;
 
   # Adds default assets
+  cd /home/pi/screenly
   HOME=/home/pi python -c "import server;server.add_default_assets();server.settings['default_assets']=True;server.settings.save()"
 
   chown -R pi:pi /home/pi
